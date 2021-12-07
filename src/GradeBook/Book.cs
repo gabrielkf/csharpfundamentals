@@ -6,11 +6,11 @@ namespace GradeBook
     public class Book
     {
         private List<double> _grades;
-        private string _name;
+        public string Name;
 
         public Book(string name)
         {
-            _name = name;
+            Name = name;
             _grades = new List<double>();
         }
 
