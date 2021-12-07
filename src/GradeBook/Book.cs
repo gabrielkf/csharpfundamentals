@@ -33,6 +33,8 @@ namespace GradeBook
                 statistics.Average += grade;
             }
 
+            statistics.Average /= _grades.Count;
+
             return statistics;
         }
 
