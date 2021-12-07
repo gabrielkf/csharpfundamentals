@@ -19,22 +19,30 @@ namespace GradeBook
             _grades.Add(grade);
         }
 
-        public void ShowStatistics()
+        public Statistics GetStatistics()
         {
-            var minGrade = double.MaxValue;
-            var maxGrade = double.MinValue;
-            var average = 0.0;
+            var statistics = new Statistics();
+            statistics.Low = double.MaxValue;
+            statistics.High = double.MinValue;
+            statistics.Average = 0.0;
 
             foreach (var grade in _grades)
             {
-                minGrade = Math.Min(grade, minGrade);
-                maxGrade = Math.Max(grade, maxGrade);
-                average += grade;
+                statistics.Low = Math.Min(grade, statistics.Low);
+                statistics.High = Math.Max(grade, statistics.High);
+                statistics.Average += grade;
             }
 
-            Console.WriteLine($"Average = {average / _grades.Count:N1}");
-            Console.WriteLine($"Lowest grade = {minGrade:N1}");
-            Console.WriteLine($"Highest grade = {maxGrade:N1}");
+            return statistics;
+        }
+
+        public void ShowStatistics()
+        {
+            var stats = this.GetStatistics();
+
+            Console.WriteLine($"Average = {stats.Average / _grades.Count:N1}");
+            Console.WriteLine($"Lowest grade = {stats.Low:N1}");
+            Console.WriteLine($"Highest grade = {stats.High:N1}");
         }
     }
 }
