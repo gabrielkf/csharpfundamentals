@@ -3,8 +3,36 @@ using Xunit;
 
 namespace GradeBook.Tests
 {
+    public delegate string WriteLogDelegate(string logMessage);
+
     public class TypeTests
     {
+        int count = 0;
+
+        [Fact]
+        public void WriteLogDelegateCanPointToMethod()
+        {
+            WriteLogDelegate log = ReturnMessage;
+
+            // log = new WriteLogDelegate(ReturnMessage);
+            log += ReturnUppercaseMessage;
+
+            var result = log("Hello");
+            Assert.Equal(3, count);
+        }
+
+        string ReturnMessage(string message)
+        {
+            count++;
+            return message;
+        }
+
+        string ReturnUppercaseMessage(string message)
+        {
+            count += 2;
+            return message.ToUpper();
+        }
+
         [Fact]
         public void SetNameFromPointerValue()
         {

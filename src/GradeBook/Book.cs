@@ -6,7 +6,10 @@ namespace GradeBook
     public class Book
     {
         private List<double> _grades;
-        public string Name;
+        public string Name { get; set; }
+
+        const string _category = "Math";
+
 
         public Book(string name)
         {
@@ -74,12 +77,19 @@ namespace GradeBook
 
         public void ShowStatistics()
         {
-            var stats = this.GetStatistics();
+            if (_grades.Count > 0)
+            {
+                var stats = this.GetStatistics();
 
-            Console.WriteLine($"Average = {stats.Average / _grades.Count:N1}");
-            Console.WriteLine($"Lowest grade = {stats.Low:N1}");
-            Console.WriteLine($"Highest grade = {stats.High:N1}");
-            Console.WriteLine($"The letter grade is {stats.Letter}");
+                Console.WriteLine($"Average = {stats.Average / _grades.Count:N1}");
+                Console.WriteLine($"Lowest grade = {stats.Low:N1}");
+                Console.WriteLine($"Highest grade = {stats.High:N1}");
+                Console.WriteLine($"The letter grade is {stats.Letter}");
+            }
+            else
+            {
+                Console.WriteLine("This grade book is empty");
+            }
         }
     }
 }
