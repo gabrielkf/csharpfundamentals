@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace GradeBook
 {
+    public delegate void GradeAddedDelegate(object sender, EventArgs args);
     public class Book
     {
         private List<double> _grades;
@@ -22,12 +23,19 @@ namespace GradeBook
             if (grade <= 100 && grade >= 0)
             {
                 _grades.Add(grade);
+
+                if (GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -40,10 +48,8 @@ namespace GradeBook
             {
                 stats.Low = Math.Min(grade, stats.Low);
                 stats.High = Math.Max(grade, stats.High);
-                stats.Average += grade;
+                stats.Average += grade / _grades.Count;
             }
-
-            stats.Average /= _grades.Count;
 
             switch (stats.Average)
             {
@@ -81,7 +87,8 @@ namespace GradeBook
             {
                 var stats = this.GetStatistics();
 
-                Console.WriteLine($"Average = {stats.Average / _grades.Count:N1}");
+                Console.WriteLine($"There are {_grades.Count} grades");
+                Console.WriteLine($"Average = {stats.Average:N1}");
                 Console.WriteLine($"Lowest grade = {stats.Low:N1}");
                 Console.WriteLine($"Highest grade = {stats.High:N1}");
                 Console.WriteLine($"The letter grade is {stats.Letter}");
