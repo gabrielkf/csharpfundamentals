@@ -15,25 +15,48 @@ namespace GradeBook
         }
     }
 
-    public abstract class Book : ObjectWithName
+    public interface IBook
     {
-        protected Book(string name) : base(name) { }
-
-        public abstract void AddGrade(double grade);
+        string Name { get; set; }
+        event GradeAddedDelegate GradeAdded;
+        void AddGrade(double grade);
+        Statistics GetStatistics();
+        void ShowStatistics();
     }
 
-    public class InMemoryBook : Book
+    public abstract class Book : ObjectWithName, IBook
+    {
+        public Book(string name) : base(name) { }
+
+        public virtual event GradeAddedDelegate GradeAdded;
+
+        public abstract void AddGrade(double grade);
+
+        public virtual Statistics GetStatistics()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowStatistics()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class InMemoryBook : IBook
     {
         private List<double> _grades;
         const string _category = "Math";
 
+        public string Name { get; set; }
 
-        public InMemoryBook(string name) : base(name)
+        public InMemoryBook(string name)
         {
+            Name = name;
             _grades = new List<double>();
         }
 
-        public override void AddGrade(double grade)
+        public void AddGrade(double grade)
         {
             if (grade <= 100 && grade >= 0)
             {
@@ -50,7 +73,7 @@ namespace GradeBook
             }
         }
 
-        public event GradeAddedDelegate GradeAdded;
+        public virtual event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -102,6 +125,7 @@ namespace GradeBook
             {
                 var stats = this.GetStatistics();
 
+                Console.WriteLine("");
                 Console.WriteLine($"There are {_grades.Count} grades");
                 Console.WriteLine($"Average = {stats.Average:N1}");
                 Console.WriteLine($"Lowest grade = {stats.Low:N1}");
