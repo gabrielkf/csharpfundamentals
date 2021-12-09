@@ -4,15 +4,23 @@ using System.Collections.Generic;
 namespace GradeBook
 {
     public delegate void GradeAddedDelegate(object sender, EventArgs args);
-    public class Book
+
+    public class ObjectWithName
     {
-        private List<double> _grades;
         public string Name { get; set; }
 
+        public ObjectWithName(string name)
+        {
+            Name = name;
+        }
+    }
+    public class Book : ObjectWithName
+    {
+        private List<double> _grades;
         const string _category = "Math";
 
 
-        public Book(string name)
+        public Book(string name) : base(name)
         {
             Name = name;
             _grades = new List<double>();

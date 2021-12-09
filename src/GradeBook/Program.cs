@@ -9,7 +9,12 @@ namespace GradeBook
         {
             var book = new Book("Scott Pilgrim");
             book.GradeAdded += OnGradeAdded;
+            EnterGrades(book);
+            book.ShowStatistics();
+        }
 
+        private static void EnterGrades(Book book)
+        {
             while (true)
             {
                 Console.WriteLine("Enter a grade or 'q' to quit");
@@ -34,8 +39,6 @@ namespace GradeBook
                     Console.WriteLine(e.Message);
                 }
             }
-
-            book.ShowStatistics();
         }
 
         static void OnGradeAdded(object sender, EventArgs e)
