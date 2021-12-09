@@ -14,19 +14,26 @@ namespace GradeBook
             Name = name;
         }
     }
-    public class Book : ObjectWithName
+
+    public abstract class Book : ObjectWithName
+    {
+        protected Book(string name) : base(name) { }
+
+        public abstract void AddGrade(double grade);
+    }
+
+    public class InMemoryBook : Book
     {
         private List<double> _grades;
         const string _category = "Math";
 
 
-        public Book(string name) : base(name)
+        public InMemoryBook(string name) : base(name)
         {
-            Name = name;
             _grades = new List<double>();
         }
 
-        public void AddGrade(double grade)
+        public override void AddGrade(double grade)
         {
             if (grade <= 100 && grade >= 0)
             {

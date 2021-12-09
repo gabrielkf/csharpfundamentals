@@ -7,13 +7,13 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            var book = new Book("Scott Pilgrim");
+            var book = new InMemoryBook("Scott Pilgrim's Grades");
             book.GradeAdded += OnGradeAdded;
             EnterGrades(book);
             book.ShowStatistics();
         }
 
-        private static void EnterGrades(Book book)
+        private static void EnterGrades(InMemoryBook book)
         {
             while (true)
             {
