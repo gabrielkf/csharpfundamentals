@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace GradeBook
 {
@@ -8,9 +7,23 @@ namespace GradeBook
         static void Main(string[] args)
         {
             IBook book = new DiskBook("Scott Pilgrim's Grades");
+            // IBook book = new DiskBook("Scott Pilgrim's Grades");
             book.GradeAdded += OnGradeAdded;
             EnterGrades(book);
-            // book.ShowStatistics();
+            var stats = book.GetStatistics();
+
+            if (stats.Count > 0)
+            {
+                Console.WriteLine($"\n{book.Name} has {stats.Count} grades");
+                Console.WriteLine($"Average = {stats.Average:N1}");
+                Console.WriteLine($"Lowest grade = {stats.Low:N1}");
+                Console.WriteLine($"Highest grade = {stats.High:N1}");
+                Console.WriteLine($"The letter grade is {stats.Letter}");
+            }
+            else
+            {
+                Console.WriteLine("This grade book is empty");
+            }
         }
 
         private static void EnterGrades(IBook book)

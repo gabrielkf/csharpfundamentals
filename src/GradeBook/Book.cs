@@ -20,7 +20,6 @@ namespace GradeBook
         event GradeAddedDelegate GradeAdded;
         void AddGrade(double grade);
         Statistics GetStatistics();
-        void ShowStatistics();
     }
 
     public abstract class Book : ObjectWithName, IBook
@@ -32,7 +31,5 @@ namespace GradeBook
         public abstract void AddGrade(double grade);
 
         public abstract Statistics GetStatistics();
-
-        public abstract void ShowStatistics();
     }
 }
